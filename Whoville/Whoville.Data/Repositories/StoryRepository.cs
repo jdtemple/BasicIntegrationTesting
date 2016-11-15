@@ -26,6 +26,7 @@ namespace Whoville.Data.Repositories
     {
       return _db.Stories
         .Include(x => x.Characters)
+        .AsNoTracking()
         .ToList();
     }
 

@@ -60,6 +60,9 @@
     <Compile Include="Models\Story.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\StoryRepository.cs" />
+    <Compile Include="ViewModels\Base\EntityModel.cs" />
+    <Compile Include="ViewModels\CharacterModel.cs" />
+    <Compile Include="ViewModels\StoryModel.cs" />
     <Compile Include="WhovilleContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +74,7 @@
       <DependentUpon>201611141637457_Initial_Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

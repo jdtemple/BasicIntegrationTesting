@@ -1,6 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using System.Web.Mvc;
 using Whoville.Data.Interfaces;
-using Whoville.Data.Repositories;
+using Whoville.Data.Models;
+using Whoville.Data.ViewModels;
 
 namespace Whoville.Controllers
 {
@@ -15,9 +18,11 @@ namespace Whoville.Controllers
 
     public ActionResult Index()
     {
-      var entities = _storyRepo.GetAll();
+      var stories = _storyRepo.GetAll();
 
-      return View("Index", entities);
+      var storyModels = Mapper.Map<List<Story>, List<StoryModel>>(stories);
+
+      return View("Index", storyModels);
     }
 
     public ActionResult About()
