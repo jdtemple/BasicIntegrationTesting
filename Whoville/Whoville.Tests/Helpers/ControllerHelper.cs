@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Whoville.Data.Models;
 
 namespace Whoville.Tests.Helpers
@@ -15,17 +11,27 @@ namespace Whoville.Tests.Helpers
 
       for (int i = 0; i < count; i++)
       {
-        stories.Add(new Story().RandomizeProperties());
+        var story = new Story().RandomizeProperties();
+
+        story.Id = i + 1;
+
+        stories.Add(story);
       }
+
+      var characterId = 0;
 
       foreach (var story in stories)
       {
         //add some characters to the story
         story.Characters = new List<Character>(count);
-
+        
         for (int i = 0; i < count; i++)
         {
-          story.Characters.Add(new Character().RandomizeProperties());
+          var character = new Character().RandomizeProperties();
+
+          character.Id = ++characterId;
+
+          story.Characters.Add(character);
         }
       }
 

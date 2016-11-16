@@ -5,7 +5,7 @@ using Whoville.Data.Models;
 using Whoville.Data.Repositories;
 using Whoville.Tests.Helpers;
 
-namespace Whoville.Tests.Repositories
+namespace Whoville.Tests.IntegrationTests
 {
   [TestClass]
   public class StoryRepositoryTest

@@ -11,7 +11,7 @@ using Whoville.Data.Models;
 using Whoville.Data.ViewModels;
 using Whoville.Tests.Helpers;
 
-namespace Whoville.Tests.Controllers
+namespace Whoville.Tests.UnitTests
 {
   [TestClass]
   public class HomeControllerTest
@@ -23,7 +23,7 @@ namespace Whoville.Tests.Controllers
     public HomeControllerTest()
     {
       //get the mock stories
-      _stories = ControllerHelper.GetStories();
+      _stories = ControllerHelper.GetStories(3);
 
       //mock the story repo
       var storyRepo = new Mock<IStoryRepository>();
