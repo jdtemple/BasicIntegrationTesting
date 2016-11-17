@@ -107,6 +107,7 @@
     <Compile Include="Helpers\PropertyComparer.cs" />
     <Compile Include="Helpers\RepositoryHelper.cs" />
     <Compile Include="Helpers\TestExtensions.cs" />
+    <Compile Include="IntegrationTests\CharacterRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\HomeControllerTest.cs" />
     <Compile Include="IntegrationTests\StoryRepositoryTest.cs" />

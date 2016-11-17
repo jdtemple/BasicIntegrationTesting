@@ -28,19 +28,19 @@ namespace Whoville.Tests.Helpers
     
     internal List<Story> SeedStories(int count = 1)
     {
-      var entities = new List<Story>(count);
+      var stories = new List<Story>(count);
 
       for (int i = 0; i < count; i++)
       {
-        entities.Add(new Story().RandomizeProperties());
+        stories.Add(new Story().RandomizeProperties());
       }
 
       try
       {
-        Context.Stories.AddRange(entities);
+        Context.Stories.AddRange(stories);
         Context.SaveChanges();
 
-        return entities;
+        return stories;
       }
       catch (Exception)
       {
@@ -57,10 +57,8 @@ namespace Whoville.Tests.Helpers
 
       if (story.Characters == null)
       {
-        story.Characters = new List<Character>();
+        story.Characters = new List<Character>(count);
       }
-
-      var characters = new List<Character>(count);
 
       for (int i = 0; i < count; i++)
       {
@@ -73,7 +71,7 @@ namespace Whoville.Tests.Helpers
       {
         Context.SaveChanges();
 
-        return characters;
+        return story.Characters.ToList();
       }
       catch (Exception)
       {
