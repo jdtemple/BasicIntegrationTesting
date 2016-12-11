@@ -16,24 +16,24 @@ namespace Whoville.Tests.UnitTests
   [TestClass]
   public class HomeControllerTest
   {
-    private readonly IStoryRepository _storyRepo;
+    private readonly ICabinetRepository _cabinetRepo;
 
-    private readonly List<Story> _stories;
+    private readonly List<Cabinet> _cabinets;
 
     public HomeControllerTest()
     {
       //get the mock stories
-      _stories = ControllerHelper.GetStories(3);
+      _cabinets = ControllerHelper.GetCabinets(3);
 
       //mock the story repo
-      var storyRepo = new Mock<IStoryRepository>();
+      var cabinetRepo = new Mock<ICabinetRepository>();
 
       //mock the repo's GetAll method
-      storyRepo.Setup(x => x.GetAll())
-        .Returns(_stories);
+      cabinetRepo.Setup(x => x.GetAll())
+        .Returns(_cabinets);
 
       //hook up the private mock repo
-      _storyRepo = storyRepo.Object;
+      _cabinetRepo = cabinetRepo.Object;
 
       //register automapper maps
       MapperConfig.RegisterMaps();
@@ -43,7 +43,7 @@ namespace Whoville.Tests.UnitTests
     public void HomeController_Index()
     {
       //controller instance with dependency injection
-      var controller = new HomeController(_storyRepo);
+      var controller = new HomeController(_cabinetRepo);
 
       //fire the index action
       var result = controller.Index() as ViewResult;
@@ -60,19 +60,19 @@ namespace Whoville.Tests.UnitTests
       Assert.AreEqual("Index", viewResult.ViewName);
 
       //ensure the model is a story collection
-      Assert.IsInstanceOfType(viewResult.Model, typeof(List<StoryModel>));
+      Assert.IsInstanceOfType(viewResult.Model, typeof(List<CabinetModel>));
 
-      var model = viewResult.Model as List<StoryModel>;
+      var model = viewResult.Model as List<CabinetModel>;
 
       //ensure the model matches our mock
-      Assert.AreEqual(_stories.Count, model.Count);
+      Assert.AreEqual(_cabinets.Count, model.Count);
 
-      var comparer = new PropertyComparer<StoryModel>();
-      var storyModels = Mapper.Map<List<Story>, List<StoryModel>>(_stories);
+      var comparer = new PropertyComparer<CabinetModel>();
+      var cabinetModels = Mapper.Map<List<Cabinet>, List<CabinetModel>>(_cabinets);
 
       foreach (var modelItem in model)
       {
-        var mockItem = storyModels.Single(x => x.Id == modelItem.Id);
+        var mockItem = cabinetModels.Single(x => x.Id == modelItem.Id);
 
         Assert.IsTrue(comparer.Equals(modelItem, mockItem));
       }

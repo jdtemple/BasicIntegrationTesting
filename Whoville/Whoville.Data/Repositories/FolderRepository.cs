@@ -6,36 +6,36 @@ using Whoville.Data.Models;
 
 namespace Whoville.Data.Repositories
 {
-  public class CharacterRepository : ICharacterRepository
+  public class FolderRepository : IFolderRepository
   {
-    private WhovilleContext _db;
+    private VaultContext _db;
 
-    public CharacterRepository(WhovilleContext db)
+    public FolderRepository(VaultContext db)
     {
       _db = db;
     }
 
-    public Character Get(int id)
+    public Folder Get(int id)
     {
-      return _db.Characters.Single(x => x.Id == id);
+      return _db.Folders.Single(x => x.Id == id);
     }
 
-    public Character Save(Character entity)
+    public Folder Save(Folder entity)
     {
-      if (entity.Story == null)
+      if (entity.Cabinet == null)
       {
-        throw new ArgumentException("A Character requires a Story.");
+        throw new ArgumentException("A Folder requires a Cabinet.");
       }
       
       if (entity.Id == 0)
       {
         //new entry
-        _db.Characters.Add(entity);
+        _db.Folders.Add(entity);
       }
       else
       {
         //existing entry
-        _db.Characters.Attach(entity);
+        _db.Folders.Attach(entity);
         _db.Entry(entity).State = EntityState.Modified;
       }
 

@@ -6,41 +6,41 @@ using Whoville.Data.Models;
 
 namespace Whoville.Data.Repositories
 {
-  public class StoryRepository : IStoryRepository
+  public class CabinetRepository : ICabinetRepository
   {
-    private WhovilleContext _db;
+    private VaultContext _db;
 
-    public StoryRepository(WhovilleContext db)
+    public CabinetRepository(VaultContext db)
     {
       _db = db;
     }
 
-    public Story Get(int id)
+    public Cabinet Get(int id)
     {
-      return _db.Stories
-        .Include(x => x.Characters)
+      return _db.Cabinets
+        .Include(x => x.Folders)
         .Single(x => x.Id == id);
     }
 
-    public List<Story> GetAll()
+    public List<Cabinet> GetAll()
     {
-      return _db.Stories
-        .Include(x => x.Characters)
+      return _db.Cabinets
+        .Include(x => x.Folders)
         .AsNoTracking()
         .ToList();
     }
 
-    public Story Save(Story entity)
+    public Cabinet Save(Cabinet entity)
     {
       if (entity.Id == 0)
       {
         //new entry
-        _db.Stories.Add(entity);
+        _db.Cabinets.Add(entity);
       }
       else
       {
         //existing entry
-        _db.Stories.Attach(entity);
+        _db.Cabinets.Attach(entity);
         _db.Entry(entity).State = EntityState.Modified;
       }
 

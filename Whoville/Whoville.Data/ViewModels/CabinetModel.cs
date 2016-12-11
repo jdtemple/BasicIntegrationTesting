@@ -3,10 +3,10 @@ using Whoville.Data.ViewModels.Base;
 
 namespace Whoville.Data.ViewModels
 {
-  public class StoryModel : EntityModel
+  public class CabinetModel : EntityModel
   {
     public string Name { get; set; }
 
-    public ICollection<CharacterModel> Characters { get; set; }
+    public ICollection<FolderModel> Folders { get; set; }
   }
 }

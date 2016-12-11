@@ -5,37 +5,37 @@ namespace Whoville.Tests.Helpers
 {
   public static class ControllerHelper
   {
-    internal static List<Story> GetStories(int count = 1)
+    internal static List<Cabinet> GetCabinets(int count = 1)
     {
-      var stories = new List<Story>(count);
+      var cabinets = new List<Cabinet>(count);
 
       for (int i = 0; i < count; i++)
       {
-        var story = new Story().RandomizeProperties();
+        var cabinet = new Cabinet().RandomizeProperties();
 
-        story.Id = i + 1;
+        cabinet.Id = i + 1;
 
-        stories.Add(story);
+        cabinets.Add(cabinet);
       }
 
       var characterId = 0;
 
-      foreach (var story in stories)
+      foreach (var cabinet in cabinets)
       {
         //add some characters to the story
-        story.Characters = new List<Character>(count);
+        cabinet.Folders = new List<Folder>(count);
         
         for (int i = 0; i < count; i++)
         {
-          var character = new Character().RandomizeProperties();
+          var folder = new Folder().RandomizeProperties();
 
-          character.Id = ++characterId;
+          folder.Id = ++characterId;
 
-          story.Characters.Add(character);
+          cabinet.Folders.Add(folder);
         }
       }
 
-      return stories;
+      return cabinets;
     }
   }
 }

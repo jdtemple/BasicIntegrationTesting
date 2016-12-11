@@ -9,13 +9,13 @@ namespace Whoville.Tests.Helpers
 {
   public class RepositoryHelper : IDisposable
   {
-    public WhovilleContext Context { get; private set; }
+    public VaultContext Context { get; private set; }
 
     private DbContextTransaction _transaction;
 
     public RepositoryHelper()
     {
-      Context = new WhovilleContext("name=WhovilleTestContext");
+      Context = new VaultContext("VaultTestContext");
 
       _transaction = Context.Database.BeginTransaction();
     }
@@ -26,21 +26,21 @@ namespace Whoville.Tests.Helpers
       GC.SuppressFinalize(this);
     }
     
-    internal List<Story> SeedStories(int count = 1)
+    internal List<Cabinet> SeedCabinets(int count = 1)
     {
-      var stories = new List<Story>(count);
+      var cabinets = new List<Cabinet>(count);
 
       for (int i = 0; i < count; i++)
       {
-        stories.Add(new Story().RandomizeProperties());
+        cabinets.Add(new Cabinet().RandomizeProperties());
       }
 
       try
       {
-        Context.Stories.AddRange(stories);
+        Context.Cabinets.AddRange(cabinets);
         Context.SaveChanges();
 
-        return stories;
+        return cabinets;
       }
       catch (Exception)
       {
@@ -48,30 +48,63 @@ namespace Whoville.Tests.Helpers
       }
     }
 
-    internal List<Character> SeedCharacters(int count = 1, Story story = null)
+    internal List<Folder> SeedFolders(int count = 1, Cabinet cabinet = null)
     {
-      if (story == null)
+      if (cabinet == null)
       {
-        story = SeedStories().First();
+        cabinet = SeedCabinets().First();
       }
 
-      if (story.Characters == null)
+      if (cabinet.Folders == null)
       {
-        story.Characters = new List<Character>(count);
+        cabinet.Folders = new List<Folder>(count);
       }
 
       for (int i = 0; i < count; i++)
       {
-        var character = new Character().RandomizeProperties();
+        var folder = new Folder().RandomizeProperties();
         
-        story.Characters.Add(new Character().RandomizeProperties());
+        cabinet.Folders.Add(new Folder().RandomizeProperties());
       }
 
       try
       {
         Context.SaveChanges();
 
-        return story.Characters.ToList();
+        return cabinet.Folders.ToList();
+      }
+      catch (Exception)
+      {
+        throw;
+      }
+    }
+
+
+    internal List<File> SeedFiles(int count = 1, Cabinet cabinet = null)
+    {
+      if (cabinet == null)
+      {
+        cabinet = SeedCabinets().First();
+      }
+
+      if (cabinet.Folders == null)
+      {
+        cabinet.Folders = new List<Folder>(count);
+      }
+      
+      cabinet.Folders.Add(new Folder().RandomizeProperties());
+
+      for(int i = 0; i < count; i++)
+      {
+        cabinet.Folders.First().Files = new List<File>();
+        cabinet.Folders.First().Files.Add(new File().RandomizeProperties());
+      }
+
+      try
+      {
+        Context.SaveChanges();
+
+        return cabinet.Folders.First().Files.ToList();
       }
       catch (Exception)
       {

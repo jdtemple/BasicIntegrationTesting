@@ -6,14 +6,14 @@ using Whoville.Data.Models;
 
 namespace Whoville.Data.Migrations
 {
-  internal sealed class Configuration : DbMigrationsConfiguration<WhovilleContext>
+  internal sealed class Configuration : DbMigrationsConfiguration<VaultContext>
   {
     public Configuration()
     {
       AutomaticMigrationsEnabled = false;
     }
 
-    protected override void Seed(WhovilleContext db)
+    protected override void Seed(VaultContext db)
     {
       ////How to debug the seed
       ////1. uncomment the if block below
@@ -29,35 +29,35 @@ namespace Whoville.Data.Migrations
       SeedStories(db);
     }
 
-    private void SeedStories(WhovilleContext db)
+    private void SeedStories(VaultContext db)
     {
       try
       {
-        var storiesExist = db.Stories.Any();
+        var storiesExist = db.Cabinets.Any();
 
         if (!storiesExist)
         {
           //add a story with some characters so we have something to start with
-          var story = new Story
+          var story = new Cabinet
           {
-            Characters = new List<Character>(),
+            Folders = new List<Folder>(),
             Name = "How the Grinch Stole Christmas!"
           };
 
-          var grinch = new Character
+          var grinch = new Folder
           {
             Name = "Grinch"
           };
 
-          var cindyLou = new Character
+          var cindyLou = new Folder
           {
             Name = "Cindy Lou Who"
           };
 
-          story.Characters.Add(grinch);
-          story.Characters.Add(cindyLou);
+          story.Folders.Add(grinch);
+          story.Folders.Add(cindyLou);
 
-          db.Stories.Add(story);
+          db.Cabinets.Add(story);
 
           db.SaveChanges();
         }

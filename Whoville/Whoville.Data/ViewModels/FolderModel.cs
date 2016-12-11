@@ -2,12 +2,12 @@
 
 namespace Whoville.Data.ViewModels
 {
-  public class CharacterModel : EntityModel
+  public class FolderModel : EntityModel
   {
     public string Name { get; set; }
 
-    public int StoryId { get; set; }
+    public int CabinetId { get; set; }
 
-    public StoryModel Story { get; set; }
+    public CabinetModel Cabinet { get; set; }
   }
 }

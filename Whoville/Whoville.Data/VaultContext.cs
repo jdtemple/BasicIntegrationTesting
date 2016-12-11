@@ -3,12 +3,12 @@ using Whoville.Data.Models;
 
 namespace Whoville.Data
 {
-  public class WhovilleContext : DbContext
+  public class VaultContext : DbContext
   {
     /// <summary>
     /// default project context
     /// </summary>
-    public WhovilleContext() : base ("WhovilleContext")
+    public VaultContext() : base ("VaultContext")
     {
       this.Configuration.LazyLoadingEnabled = false;
       this.Configuration.ProxyCreationEnabled = false;
@@ -18,13 +18,16 @@ namespace Whoville.Data
     /// testing constructor, allows us to supply our own connection string
     /// </summary>
     /// <param name="connStr"></param>
-    public WhovilleContext(string connStr) : base(connStr)
+    public VaultContext(string connStr) : base(connStr)
     {
       this.Configuration.LazyLoadingEnabled = false;
       this.Configuration.ProxyCreationEnabled = false;
     }
 
-    public virtual DbSet<Character> Characters { get; set; }
-    public virtual DbSet<Story> Stories { get; set; }
+    public virtual DbSet<Cabinet> Cabinets { get; set; }
+
+    public virtual DbSet<Folder> Folders { get; set; }
+
+    public virtual DbSet<File> Files { get; set; }
   }
 }

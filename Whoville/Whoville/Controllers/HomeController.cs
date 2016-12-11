@@ -9,18 +9,18 @@ namespace Whoville.Controllers
 {
   public class HomeController : Controller
   {
-    private IStoryRepository _storyRepo;
+    private ICabinetRepository _cabinetRepo;
 
-    public HomeController(IStoryRepository storyRepo)
+    public HomeController(ICabinetRepository cabinetRepo)
     {
-      _storyRepo = storyRepo;
+      _cabinetRepo = cabinetRepo;
     }
 
     public ActionResult Index()
     {
-      var stories = _storyRepo.GetAll();
+      var stories = _cabinetRepo.GetAll();
 
-      var storyModels = Mapper.Map<List<Story>, List<StoryModel>>(stories);
+      var storyModels = Mapper.Map<List<Cabinet>, List<CabinetModel>>(stories);
 
       return View("Index", storyModels);
     }
