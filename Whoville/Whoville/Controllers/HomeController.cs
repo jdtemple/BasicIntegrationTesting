@@ -18,11 +18,11 @@ namespace Whoville.Controllers
 
     public ActionResult Index()
     {
-      var stories = _cabinetRepo.GetAll();
+      var cabinets = _cabinetRepo.GetAll();
 
-      var storyModels = Mapper.Map<List<Cabinet>, List<CabinetModel>>(stories);
+      var cabinetModels = Mapper.Map<List<Cabinet>, List<CabinetModel>>(cabinets);
 
-      return View("Index", storyModels);
+      return View("Index", cabinetModels);
     }
 
     public ActionResult About()
