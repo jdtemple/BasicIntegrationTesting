@@ -70,6 +70,7 @@
     <Compile Include="Repositories\FolderRepository.cs" />
     <Compile Include="Repositories\CabinetRepository.cs" />
     <Compile Include="ViewModels\Base\EntityModel.cs" />
+    <Compile Include="ViewModels\FileModel.cs" />
     <Compile Include="ViewModels\FolderModel.cs" />
     <Compile Include="ViewModels\CabinetModel.cs" />
     <Compile Include="VaultContext.cs" />
