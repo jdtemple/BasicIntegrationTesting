@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using Whoville.Data;
+using Whoville.Data.Migrations;
 using Whoville.Data.Models;
 
 namespace Whoville.Tests.Helpers
@@ -17,6 +20,8 @@ namespace Whoville.Tests.Helpers
     {
       Context = new WhovilleContext("name=WhovilleTestContext");
 
+      ApplyMigrations();
+
       _transaction = Context.Database.BeginTransaction();
     }
 
@@ -25,7 +30,47 @@ namespace Whoville.Tests.Helpers
       Dispose(true);
       GC.SuppressFinalize(this);
     }
-    
+
+    protected virtual void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        if (_transaction != null)
+        {
+          //roll back the transaction, so the database is clean for the next test run
+          _transaction.Rollback();
+          _transaction.Dispose();
+        }
+
+        if (Context != null)
+        {
+          Context.Dispose();
+        }
+      }
+    }
+
+    private void ApplyMigrations()
+    {
+      //update the database schema for any new migrations that took place
+      var dbConfig = new Configuration();
+
+      dbConfig.ContextType = typeof(WhovilleContext);
+      dbConfig.TargetDatabase = new DbConnectionInfo("WhovilleTestContext");
+
+      var dbMigrator = new DbMigrator(dbConfig);
+
+      if (dbMigrator.GetPendingMigrations().Count() > 0)
+      {
+        dbMigrator.Update();
+
+        //commit the migration
+        Context.SaveChanges();
+
+        //run the seed
+        dbConfig.SeedTestDatabase(Context);
+      }
+    }
+
     internal List<Story> SeedStories(int count = 1)
     {
       var stories = new List<Story>(count);
@@ -76,24 +121,6 @@ namespace Whoville.Tests.Helpers
       catch (Exception)
       {
         throw;
-      }
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (disposing)
-      {
-        if (_transaction != null)
-        {
-          //roll back the transaction, so the database is clean for the next test run
-          _transaction.Rollback();
-          _transaction.Dispose();
-        }
-
-        if (Context != null)
-        {
-          Context.Dispose();
-        }
       }
     }
   }

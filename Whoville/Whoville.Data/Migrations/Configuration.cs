@@ -6,11 +6,23 @@ using Whoville.Data.Models;
 
 namespace Whoville.Data.Migrations
 {
-  internal sealed class Configuration : DbMigrationsConfiguration<WhovilleContext>
+  public sealed class Configuration : DbMigrationsConfiguration<WhovilleContext>
   {
     public Configuration()
     {
       AutomaticMigrationsEnabled = false;
+    }
+
+    public void SeedTestDatabase(WhovilleContext context)
+    {
+      if (context.Database.Connection.Database.Equals("Whoville_Tests"))
+      {
+        Seed(context);
+      }
+      else
+      {
+        throw new ArgumentException("SeedTestDatabase only allowed on the test database instance");
+      }
     }
 
     protected override void Seed(WhovilleContext db)
